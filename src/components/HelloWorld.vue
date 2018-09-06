@@ -2,7 +2,7 @@
    <div class=''>
        <button @click="getdata">点击请求</button>
         <p>{{count}}</p>  
-        <ul class="ull" v-for="n in 10">
+        <ul class="ull" v-for="(n,index) in 10" :key="index">
             <li>{{n}}</li>
         </ul>
         <button @click="add">加</button>

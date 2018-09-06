@@ -8,7 +8,17 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/home'
+            redirect: '/login'
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component(resolve) {
+                require(['../page/login/login'], resolve)
+            },
+            meta: {
+                title: '登录页'
+            },
         },
         {
             path: '/home',
