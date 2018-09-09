@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/api': {
-            target: 'http://lm-erp-admin-os.donaldhan.cn/#/',
+            target: 'https://elm.cangdu.org',
             changeOrigin: true,
             pathRewrite: {
                 '^/api': ''

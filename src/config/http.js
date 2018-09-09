@@ -1,8 +1,9 @@
 import axios from 'axios'
+import {Message} from 'element-ui'
 
 axios.defaults.timeout = 5000;
 axios.defaults.baseURL ='api';
-axios.defaults.headers ={"Content-Type":'multipart/form-data'}
+axios.defaults.headers ={"Content-Type":'application/json'}
 
 //http request 拦截器
 axios.interceptors.request.use(
@@ -24,11 +25,12 @@ axios.interceptors.request.use(
 //http response 拦截器
 axios.interceptors.response.use(
   response => {
-    if(response.data.errCode ==2){
-      router.push({
-        path:"/login",
-        querry:{redirect:router.currentRoute.fullPath}//从哪个页面跳转
-      })
+    if(response.data.status==0){
+      Message({
+        showClose: true,
+        message: response.data.message,
+        type: "error"
+      });
     }
     return response;
   },

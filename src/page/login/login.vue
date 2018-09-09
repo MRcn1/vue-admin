@@ -7,10 +7,10 @@
                             <el-input v-model="loginform.username" placeholder="用户名"></el-input>
                         </el-form-item>
                         <el-form-item prop="password">
-                            <el-input v-model="loginform.password" placeholder="密码"></el-input>
+                            <el-input type="password" v-model="loginform.password" placeholder="密码"></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type='primary'>登录</el-button>
+                            <el-button type='primary' @click="login" :loading="loading">登录</el-button>
                         </el-form-item>
                         <el-form-item>
                             <p class="tip">温馨提示：</p>
@@ -23,9 +23,11 @@
 </template>
 
 <script>
+import {login} from "../../api/admin"
  export default {
    data () {
         return {
+            loading:false,
             loginform:{
                 username:'',
                 password:''
@@ -55,7 +57,21 @@
 
    },
    methods: {
-
+       login(){
+           this.loading = true
+           let data = {
+               user_name : this.loginform.username,
+               password : this.loginform.password,
+           }
+           login(data).then(res=>{
+               if(res.status==1){
+                   this.$message.success(res.success)
+                   this.loading = false
+               }else{
+                   this.loading = false
+               }
+           })
+       }
    },
  }
 </script>
