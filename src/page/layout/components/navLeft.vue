@@ -1,3 +1,4 @@
+<!--
 <template>  
     <div class='navLeft'>
         <el-col :span="3.5">
@@ -5,8 +6,10 @@
             default-active="0"
             class="el-menu-vertical-demo"
             :default-openeds="openeds"
-            active-text-color='#4c9dea'
+            active-text-color='#20a0ff'
             :unique-opened='true'
+            background-color='#324057'
+            text-color='#cff'
             >
                 <el-submenu :index="num+''" v-for="(item,num) in classify" :key="num">
                     <template slot="title">
@@ -78,11 +81,78 @@ export default {
 </script>
 
 <style scoped lang='less'>
+.navLeft{
+    background-color: #324057;
+}
 .navLeft .el-menu-vertical-demo{
-    min-width: 200px;
+    min-width: 300px;
     border-right: none;
 }
 .active{
-    color: #4c9dea
+    color: #20a0ff
 }
+</style>
+
+<style  lang='less'>
+.navLeft{
+    .el-menu-item-group{
+        background-color: #1f2d3d!important;
+    }
+}
+</style>
+-->
+
+<template>
+    <div class="navLeft">
+        <el-col :span="3.5">
+            <el-menu
+            default-active="2"
+            class="el-menu-vertical-demo"
+            background-color="#324057"
+            text-color="#cff"
+            active-text-color="#20a0ff">
+            <el-submenu index="1">
+                <template slot="title">
+                    <span>导航一</span>
+                </template>
+                <el-menu-item-group>
+                    <el-menu-item index="1-1">选项1</el-menu-item>
+                    <el-menu-item index="1-2">选项2</el-menu-item>
+                </el-menu-item-group>
+            </el-submenu>
+            </el-menu>
+        </el-col>
+    </div>
+</template>
+
+<script>
+ export default {
+   data () {
+        return {
+
+       }
+   },
+   components: {
+
+   },
+   created(){
+
+   },
+   methods: {
+
+   },
+ }
+</script>
+
+<style scoped lang='less'>
+.navLeft{
+    min-width: 290px;
+    background-color: #324057;
+    overflow: hidden;
+    .el-menu-vertical-demo{
+        min-width: 300px;
+    }
+}
+
+ 
 </style>

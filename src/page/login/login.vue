@@ -67,6 +67,7 @@ import {login} from "../../api/admin"
                if(res.status==1){
                    this.$message.success(res.success)
                    this.loading = false
+                   this.$router.push({path:'home'})
                }else{
                    this.loading = false
                }
