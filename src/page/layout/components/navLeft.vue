@@ -111,13 +111,12 @@ export default {
             background-color="#324057"
             text-color="#cff"
             active-text-color="#20a0ff">
-            <el-submenu index="1">
+            <el-submenu :index="index+''" v-for="(item, index) in parse" :key="index">
                 <template slot="title">
-                    <span>导航一</span>
+                    <span>{{item}}</span>
                 </template>
                 <el-menu-item-group>
-                    <el-menu-item index="1-1">选项1</el-menu-item>
-                    <el-menu-item index="1-2">选项2</el-menu-item>
+                    <el-menu-item v-for="(value, num) in child" :key="num" :index="index-num+''" v-if="value.meta.att==item" @click="torouter(value.path)">{{value.meta.title}}</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
             </el-menu>
@@ -129,17 +128,33 @@ export default {
  export default {
    data () {
         return {
-
+            parse:[],
+            child:[]
        }
    },
    components: {
 
    },
    created(){
-
+       this.getData()
    },
    methods: {
-
+       getData(){
+           console.log(this.$router.options.routes[2].children);
+           let arr = []
+           this.$router.options.routes[2].children.forEach(res => {
+               if(res.path!=''){
+                   console.log(res)
+                   arr.push(res.meta.att)
+                   this.child.push(res)
+               }
+           });
+           this.parse = Array.from(new Set(arr))
+           
+       },
+       torouter(path){
+           this.$router.push({path:path})
+       }
    },
  }
 </script>
@@ -152,7 +167,18 @@ export default {
     .el-menu-vertical-demo{
         min-width: 300px;
     }
+    .el-menu-item{
+        background-color: #0b3436!important;
+    }
+    
 }
-
- 
 </style>
+
+
+<style lang='less'>
+.el-menu-item-group__title{
+    height: 0;
+    padding:0;
+}
+</style>
+

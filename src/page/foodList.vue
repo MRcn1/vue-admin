@@ -1,6 +1,6 @@
 <template>
-   <div class='Merchantmanagement'>
-       312
+   <div class='foodList'>
+       foodList
    </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
-   <div class='Merchantmanagement1'>
-       Merchantmanagement1
+   <div class='adminList'>
+       adminList
    </div>
 </template>
 

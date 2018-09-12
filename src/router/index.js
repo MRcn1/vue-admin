@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
 
@@ -21,86 +20,96 @@ export default new Router({
             },
         },
         {
-            path: '/home',
-            name: 'home',
+            path: '/layout',
+            name: 'layout',
             component(resolve) {
                 require(['../page/layout/layout'], resolve)
             },
             meta: {
-                title: 'DEMO'
+                title: '主页'
             },
-            children: [
+            children:[
                 {
-                    path: '',
-                    redirect: '/home/home2'
+                    path:'',
+                    require:'/userList'
                 },
+                // {
+                //     path: '/mange',
+                //     name: 'mange',
+                //     component(resolve) {
+                //         require(['../page/mange'], resolve)
+                //     },
+                //     meta: {
+                //         title: '主页',
+                //     }, 
+                // },
                 {
-                    path: '/home/home2',
-                    name: 'HTML',
+                    path: '/userList',
+                    name: 'userList',
                     component(resolve) {
-                        require(['../page/home/home2'], resolve)
+                        require(['../page/userList'], resolve)
                     },
                     meta: {
-                        top: "HTML"
-                    },
+                        title: '用户管理',
+                        att:'数据管理'
+                    }, 
                 },
                 {
-                    path: '/home/home3',
-                    name: 'CSS',
+                    path: '/shopList',
+                    name: 'shopList',
                     component(resolve) {
-                        require(['../page/home/home3'], resolve)
+                        require(['../page/shopList'], resolve)
                     },
                     meta: {
-                        top: "CSS"
-                    },
+                        title: '商户管理',
+                        att:'数据管理'
+                    }, 
                 },
                 {
-                    path: '/home/home4',
-                    name: 'JS',
+                    path: '/foodList',
+                    name: 'foodList',
                     component(resolve) {
-                        require(['../page/home/home4'], resolve)
+                        require(['../page/foodList'], resolve)
                     },
                     meta: {
-                        top: "JS"
-                    },
+                        title: '食品列表',
+                        att:'数据管理'
+                    }, 
                 },
                 {
-                    path: '/home/loading',
-                    name: 'laoding',
+                    path: '/orderList',
+                    name: 'orderList',
                     component(resolve) {
-                        require(['../page/home/loading/loading'], resolve)
+                        require(['../page/orderList'], resolve)
                     },
                     meta: {
-                        top: "VUE"
-                    },
-                },
-            ]
-        },
-        {
-            path: '/Merchantmanagement',
-            name: 'Merchantmanagement',
-            component(resolve) {
-                require(['../page/layout/layout'], resolve)
-            },
-            meta: {
-                title: '基础信息'
-            },
-            children: [
-                {
-                    path: '',
-                    redirect: '/Merchantmanagement/Merchantmanagement1'
+                        title: '订单列表',
+                        att:'数据管理'
+                    }, 
                 },
                 {
-                    path: '/Merchantmanagement/Merchantmanagement1',
-                    name: '区域列表',
+                    path: '/adminList',
+                    name: 'adminList',
                     component(resolve) {
-                        require(['../page/Merchantmanagement/Merchantmanagement1'], resolve)
+                        require(['../page/adminList'], resolve)
                     },
                     meta: {
-                        top: "店铺管理"
+                        title: '管理员列表',
+                        att:'数据管理'
+                    }, 
+                },
+                {
+                    path: '/addshow',
+                    name: 'addshow',
+                    component(resolve) {
+                        require(['../page/addshow'], resolve)
                     },
+                    meta: {
+                        title: '添加商品',
+                        att:'添加数据'
+                    }, 
                 }
             ]
-        }
+        },
     ]
 })
