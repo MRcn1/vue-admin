@@ -1,122 +1,24 @@
-<!--
-<template>  
-    <div class='navLeft'>
-        <el-col :span="3.5">
-            <el-menu
-            default-active="0"
-            class="el-menu-vertical-demo"
-            :default-openeds="openeds"
-            active-text-color='#20a0ff'
-            :unique-opened='true'
-            background-color='#324057'
-            text-color='#cff'
-            >
-                <el-submenu :index="num+''" v-for="(item,num) in classify" :key="num">
-                    <template slot="title">
-                        <span>{{item}}</span>
-                    </template>
-                    <el-menu-item-group>
-                        <el-menu-item :index="num+'-'+ind" v-for="(value,ind) in newchildren" :key="ind" :class="value.path==$route.path?'active':''" @click="toPath(value.path)" v-if="item==value.meta.top">{{value.name}}</el-menu-item>
-                    </el-menu-item-group>
-                </el-submenu>
-            </el-menu>
-        </el-col>
-    </div>
-</template>
-
-<script>
-export default {
-    data () {
-        return {
-            routes:null,
-            classify:null,
-            newchildren:null,
-            openeds:['0'],
-            name:'',
-        }   
-    },
-    components: {
-
-    },
-    created(){
-        this.selsev()
-    },
-    methods: {
-        selsev(){
-            let classify = []
-            let newchildren = []
-            this.$router.options.routes.filter(res=>{
-                if(res.name==this.$route.matched[0].name){
-                    res.children.filter(val=>{
-                        if(val.path!=''){
-                            classify.push(val.meta.top)
-                            newchildren.push(val)
-                        }
-                    })
-                }
-            })
-            this.classify = [...new Set(classify)];
-            this.newchildren = [...new Set(newchildren)];
-            
-            console.log(this.$route.matched[0].name,this.name)
-            if(this.name!=this.$route.matched[0].name){
-                this.openeds=['0']
-                this.name = this.$route.matched[0].name
-            }else{
-                this.name = this.$route.matched[0].name
-            }
-
-            
-        },
-        toPath(path){
-            this.$router.push({path:path})
-        }
-    },
-    watch:{
-        $route(to,from){
-            this.selsev()
-        }
-    }
- }
-</script>
-
-<style scoped lang='less'>
-.navLeft{
-    background-color: #324057;
-}
-.navLeft .el-menu-vertical-demo{
-    min-width: 300px;
-    border-right: none;
-}
-.active{
-    color: #20a0ff
-}
-</style>
-
-<style  lang='less'>
-.navLeft{
-    .el-menu-item-group{
-        background-color: #1f2d3d!important;
-    }
-}
-</style>
--->
-
 <template>
     <div class="navLeft">
         <el-col :span="3.5">
             <el-menu
-            default-active="2"
             class="el-menu-vertical-demo"
             background-color="#324057"
             text-color="#cff"
+            :default-openeds='defaultActive'
             active-text-color="#20a0ff">
             <el-submenu :index="index+''" v-for="(item, index) in parse" :key="index">
                 <template slot="title">
+                    <i class="el-icon-document" v-if="index==0"></i>
+                    <i class="el-icon-plus" v-if="index==1"></i>
+                    <i class="el-icon-star-off" v-if="index==2"></i>
+                    <i class="el-icon-edit" v-if="index==3"></i>
+                    <i class="el-icon-setting" v-if="index==4"></i>
+                    <i class="el-icon-warning" v-if="index==5"></i>
                     <span>{{item}}</span>
                 </template>
                 <el-menu-item-group>
-                    <el-menu-item v-for="(value, num) in child" :key="num" :index="index-num+''" v-if="value.meta.att==item" @click="torouter(value.path)">{{value.meta.title}}</el-menu-item>
+                    <el-menu-item :class="{isActive:$route.matched[1].name == value.name?true:false}" v-for="(value, num) in child" :key="num" :index="index+'-'+num" v-if="value.meta.att==item" @click="torouter(value.path)">{{value.name}}</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
             </el-menu>
@@ -129,7 +31,8 @@ export default {
    data () {
         return {
             parse:[],
-            child:[]
+            child:[],
+            defaultActive:['0'],
        }
    },
    components: {
@@ -137,20 +40,24 @@ export default {
    },
    created(){
        this.getData()
+       if(this.$route.matched[1].meta.att){
+           this.parse.forEach((res,index)=>{
+               if(res==this.$route.matched[1].meta.att){
+                   this.defaultActive = [index+'']
+               }
+           })
+       }
    },
    methods: {
        getData(){
-           console.log(this.$router.options.routes[2].children);
            let arr = []
            this.$router.options.routes[2].children.forEach(res => {
                if(res.path!=''){
-                   console.log(res)
                    arr.push(res.meta.att)
                    this.child.push(res)
                }
            });
            this.parse = Array.from(new Set(arr))
-           
        },
        torouter(path){
            this.$router.push({path:path})
@@ -166,9 +73,16 @@ export default {
     overflow: hidden;
     .el-menu-vertical-demo{
         min-width: 300px;
+        .el-menu-item:hover{
+            background-color: #48576a!important;
+        }
+        
     }
     .el-menu-item{
         background-color: #0b3436!important;
+    }
+    .isActive{
+        color: rgb(32, 160, 255)!important;
     }
     
 }
@@ -176,9 +90,14 @@ export default {
 
 
 <style lang='less'>
-.el-menu-item-group__title{
-    height: 0;
-    padding:0;
+.navLeft{
+    .el-menu-item-group__title{
+        height: 0;
+        padding:0;
+    }
+    .el-submenu__title:hover{
+        background-color: #48576a!important;
+    }
 }
 </style>
 
