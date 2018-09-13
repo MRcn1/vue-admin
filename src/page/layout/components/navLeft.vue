@@ -18,7 +18,7 @@
                     <span>{{item}}</span>
                 </template>
                 <el-menu-item-group>
-                    <el-menu-item :class="{isActive:$route.matched[1].name == value.name?true:false}" v-for="(value, num) in child" :key="num" :index="index+'-'+num" v-if="value.meta.att==item" @click="torouter(value.path)">{{value.name}}</el-menu-item>
+                    <el-menu-item :class="{isActive:$route.matched[1].name == value.name?true:false}" v-for="(value, num) in child" :key="num" :index="index+'-'+num" v-if="value.meta.att==item" @click="torouter(value.path)">{{value.meta.title}}</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
             </el-menu>

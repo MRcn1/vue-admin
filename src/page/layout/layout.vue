@@ -1,6 +1,5 @@
 <template>
     <div class='layout'>
-        <!-- <nav-header></nav-header> -->
         <div class="app-main">
             <nav-left></nav-left>
             <main-content></main-content>
@@ -9,7 +8,6 @@
 </template>
 
 <script>
-    import navHeader from "./components/navHeader"
     import navLeft from "./components/navLeft"
     import mainContent from "./components/mainContent"
     export default {
@@ -19,7 +17,6 @@
             }
         },
         components: {
-            navHeader,
             navLeft,
             mainContent
         },
@@ -39,7 +36,6 @@
     .mainContent{
         width: 100%;
         background-color: #fafafa;
-        padding: 20px;
     }
 }
 </style>

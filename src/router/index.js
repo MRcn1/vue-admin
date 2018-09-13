@@ -31,18 +31,8 @@ export default new Router({
             children:[
                 {
                     path:'',
-                    require:'/userList'
+                    redirect:'/userList'
                 },
-                // {
-                //     path: '/mange',
-                //     name: 'mange',
-                //     component(resolve) {
-                //         require(['../page/mange'], resolve)
-                //     },
-                //     meta: {
-                //         title: '主页',
-                //     }, 
-                // },
                 {
                     path: '/userList',
                     name: 'userList',

@@ -1,6 +1,6 @@
 <template>
    <div class='userList'>
-       userList
+
    </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
         }
     },
     components: {
-
+        
     },
     created(){
 
