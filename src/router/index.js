@@ -16,7 +16,7 @@ export default new Router({
                 require(['../page/login/login'], resolve)
             },
             meta: {
-                title: '登录页'
+                title: '登录'
             },
         },
         {

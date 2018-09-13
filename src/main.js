@@ -9,6 +9,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './style/reset.css'
 import store from "./store/store"
+import NProgress from "nprogress"
+import "nprogress/nprogress.css"
 Vue.use(ElementUI);
 
 //定义全局变量
@@ -27,3 +29,15 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+document.title = '登录'
+router.beforeEach((to,from,next) => {
+  console.log(to)
+  document.title = to.meta.title
+  NProgress.start()
+  next()
+})
+ 
+router.afterEach(() => {
+  NProgress.done()
+})
+

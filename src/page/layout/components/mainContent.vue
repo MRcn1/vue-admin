@@ -12,7 +12,7 @@
                     <div style="text-align: center" class="popo">
                         <ul>
                             <li>首页</li>
-                            <li>退出</li>
+                            <li @click="dropout">退出</li>
                         </ul>
                     </div>
                     <div slot="reference" class="red">
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import {singout} from '@/api/admin'
 export default {
     data () {
         return {
@@ -52,6 +53,14 @@ export default {
         rou(){
             this.att = this.$route.matched[1].meta.att
             this.title = this.$route.matched[1].meta.title
+        },
+        dropout(){
+            singout().then(res=>{
+                if(res.status==1){
+                    this.$message.success(res.success)
+                    this.$router.push({path:'/'})
+                }
+            })
         }
     },
     watch:{
@@ -99,12 +108,17 @@ export default {
 }
 .el-popover{
     li{
-        width: 100%;
+        width: 120%;
         padding: 10px;
+        margin-left: -12px;
     }
     li:hover{
         cursor: pointer;
+        background-color: #eff2f7;
     }
+}
+.el-popover{
+    padding: 0;
 }
 </style>
 
