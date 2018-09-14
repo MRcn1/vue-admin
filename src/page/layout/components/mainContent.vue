@@ -22,14 +22,16 @@
                 </el-breadcrumb>
             </div>
 
-            <keep-alive>
+            <div class="content">
+                <keep-alive>
+                    <transition name="fade" mode="out-in">
+                        <router-view v-if="$route.meta.keepAlive"></router-view>
+                    </transition>
+                </keep-alive>
                 <transition name="fade" mode="out-in">
-                    <router-view v-if="$route.meta.keepAlive"></router-view>
+                    <router-view v-if="!$route.meta.keepAlive"></router-view>
                 </transition>
-            </keep-alive>
-            <transition name="fade" mode="out-in">
-                <router-view v-if="!$route.meta.keepAlive"></router-view>
-            </transition>
+            </div>
        </div>
    </div>
 </template>
@@ -77,11 +79,13 @@ export default {
     height: 100%;
     background-color: #fff;
     box-shadow: 1px 1px 1px 1px #ccc;
+    overflow: auto;
     .el-breadcrumb{
         height: 60px;
         background-color: #eff2f7;
         line-height: 60px;
         padding-left: 20px;
+        position: relative;
         .red{
             width: 40px;
             height: 40px;
@@ -98,6 +102,9 @@ export default {
         .content{
             padding: 30px;
         }
+    }
+    .content{
+        padding: 20px;
     }
 }
 .fade-enter-active, .fade-leave-active{
