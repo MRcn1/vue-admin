@@ -29,6 +29,7 @@
         </el-table>
 
         <div class="pagination" style="display:flex;justify-content:center;margin:30px 0;">
+            <p style="padding:5px">共 {{num}} 条</p>
             <el-pagination
             background
             layout="prev, pager, next"
@@ -48,7 +49,8 @@ export default {
         return {
             tableData:[],
             total:1000,
-            currentPage:1
+            currentPage:1,
+            num:''
         }
     },
     components: {
@@ -72,6 +74,7 @@ export default {
             count().then(res=>{
                 if(res.status==1){
                     this.total = res.count
+                    this.num = res.count
                 }
             })
         },
@@ -86,6 +89,7 @@ export default {
 .aa{
     display: flex;
     justify-content: center;
+    
 }
  
 </style>
