@@ -29,15 +29,14 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
-document.title = '登录'
+
 router.beforeEach((to,from,next) => {
-  console.log(to)
-  document.title = to.meta.title
   NProgress.start()
   next()
 })
  
-router.afterEach(() => {
+router.afterEach((to, from) => {
   NProgress.done()
+  document.title = to.meta.title
 })
 
