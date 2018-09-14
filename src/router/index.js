@@ -40,8 +40,9 @@ export default new Router({
                         require(['../page/userList'], resolve)
                     },
                     meta: {
-                        title: '用户管理',
-                        att:'数据管理'
+                        title: '用户列表',
+                        att:'数据管理',
+                        keepAlive:true,
                     }, 
                 },
                 {
