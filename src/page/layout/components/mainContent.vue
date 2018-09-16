@@ -24,7 +24,10 @@
 
             <div class="content">
                 <transition name="fade" mode="out-in">
-                    <router-view></router-view>
+                    <keep-alive v-if="keepAlive">
+                        <router-view></router-view>
+                    </keep-alive>
+                    <router-view v-else></router-view>
                 </transition>
             </div>
        </div>
@@ -38,6 +41,7 @@ export default {
         return {
             att:'',
             title:'',
+            keepAlive:'',
         }
     },
     components: {
@@ -45,6 +49,7 @@ export default {
     },
     created(){
         this.rou()
+        this.keepAlive = this.$route.meta.keepAlive
     },
     methods: {
         rou(){
