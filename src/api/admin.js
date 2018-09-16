@@ -1,4 +1,5 @@
 import {fetch,post} from '../config/http.js'
+import './admin2'
 
 export function login(params){
     return post("/admin/login",{...params})
