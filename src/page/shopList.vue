@@ -79,140 +79,145 @@
 </template>
 
 <script>
-import {merchants} from '@/api/admin'
+import { merchants } from "@/api/admin2";
 export default {
-    data () {
-        return {
-           tableData: [],
-           dialogFormVisible: false,
-           form: {
-             name: '',
-             region: '',
-             date1: '',
-             date2: '',
-             delivery: false,
-             type: [],
-             resource: '',
-             desc: ''
+  data() {
+    return {
+      tableData: [],
+      dialogFormVisible: false,
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
+      },
+      formLabelWidth: "120px",
+      city: "惠州",
+      options: [
+        {
+          value: "yiguoliaoli",
+          label: "异国料理",
+          children: [
+            {
+              value: "rihanliaoli",
+              label: "日韩料理"
             },
-           formLabelWidth: '120px',
-           city:'惠州',
-           options:[{
-               value:'yiguoliaoli',
-               label:'异国料理',
-               children:[{
-                   value:'rihanliaoli',
-                   label:'日韩料理'
-               },
-               {
-                   value:'xican',
-                   label:'西餐'
-               },
-               {
-                   value:'pisayimian',
-                   label:'披萨意面'
-               },
-               {
-                   value:'东南亚',
-                   label:'西餐'
-               }]
-           },{
-               value:'kuaicanbiandang',
-               label:'快餐便当',
-               children:[{
-                   value:'jiancan',
-                   label:'简餐'
-               },
-               {
-                   value:'gaijiaofan',
-                   label:'盖浇饭'
-               },
-               {
-                   value:'misimianguan',
-                   label:'米丝面馆'
-               },
-               {
-                   value:'baozizhoudian',
-                   label:'包子粥店'
-               }]  
-           }],
-           imageUrl: ''
+            {
+              value: "xican",
+              label: "西餐"
+            },
+            {
+              value: "pisayimian",
+              label: "披萨意面"
+            },
+            {
+              value: "东南亚",
+              label: "西餐"
+            }
+          ]
+        },
+        {
+          value: "kuaicanbiandang",
+          label: "快餐便当",
+          children: [
+            {
+              value: "jiancan",
+              label: "简餐"
+            },
+            {
+              value: "gaijiaofan",
+              label: "盖浇饭"
+            },
+            {
+              value: "misimianguan",
+              label: "米丝面馆"
+            },
+            {
+              value: "baozizhoudian",
+              label: "包子粥店"
+            }
+          ]
         }
+      ],
+      imageUrl: ""
+    };
+  },
+  components: {},
+  created() {
+    let vm = this;
+    let data = {
+      latitude: 23.11075,
+      longitude: 114.416786,
+      limit: 20
+    };
+    merchants(data).then(res => {
+      console.log(res);
+      vm.tableData = res;
+    });
+  },
+  methods: {
+    handleClick(row) {
+      var vm = this;
+      console.log(row);
+      vm.dialogFormVisible = true;
     },
-    components: {
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
 
-    },
-    created(){
-        let vm = this
-        let data = {
-            latitude:23.11075,
-            longitude:114.416786,
-            limit:20
-        }
-        merchants(data).then(res=>{
-          console.log(res)
-          vm.tableData = res
-        }) 
-    },
-    methods: {
-       handleClick(row) {
-        var vm = this;
-        console.log(row);
-        vm.dialogFormVisible=true
-      },
-       handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
       }
-    },
-    activated () {
-        let vm = this
-        let data = {
-            latitude:23.11075,
-            longitude:114.416786,
-            limit:20
-        }
-        merchants(data).then(res=>{
-          console.log(res)
-          vm.tableData = res
-        })     
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
     }
- }
+  },
+  activated() {
+    let vm = this;
+    let data = {
+      latitude: 23.11075,
+      longitude: 114.416786,
+      limit: 20
+    };
+    merchants(data).then(res => {
+      console.log(res);
+      vm.tableData = res;
+    });
+  }
+};
 </script>
 
 <style scoped lang='less'>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>
