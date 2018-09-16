@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import {login} from "../../api/admin"
+import {login,info} from "../../api/admin"
+import {baseImgPath} from "@/config/env"
  export default {
    data () {
         return {
@@ -65,9 +66,13 @@ import {login} from "../../api/admin"
            }
            login(data).then(res=>{
                if(res.status==1){
-                   this.$message.success(res.success)
-                   this.loading = false
-                   this.$router.push({path:'layout'})
+                    this.$message.success(res.success)
+                    this.loading = false
+                    info().then(res=>{
+                        sessionStorage.avatar = baseImgPath + res.data.avatar
+                        this.$router.push({path:'layout'})
+                    })
+                    
                }else{
                    this.loading = false
                }

@@ -15,3 +15,7 @@ export function list(params){
 export function count(params){
     return fetch("/v1/users/count",{...params})
 }
+
+export function info(params){
+    return fetch("/admin/info",{...params})
+}

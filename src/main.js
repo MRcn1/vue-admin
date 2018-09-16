@@ -39,4 +39,3 @@ router.afterEach((to, from) => {
   NProgress.done()
   document.title = to.meta.title
 })
-

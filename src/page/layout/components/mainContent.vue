@@ -16,7 +16,7 @@
                         </ul>
                     </div>
                     <div slot="reference" class="red">
-                        <img src="@/assets/img/user.jpg" alt="" width="100%">
+                        <img :src="avatar" alt="" width="100%">
                     </div>
                     </el-popover>
                 </el-breadcrumb>
@@ -36,12 +36,14 @@
 
 <script>
 import {singout} from '@/api/admin'
+import {mapState} from "Vuex"
 export default {
     data () {
         return {
             att:'',
             title:'',
             keepAlive:'',
+            avatar:''
         }
     },
     components: {
@@ -50,6 +52,7 @@ export default {
     created(){
         this.rou()
         this.keepAlive = this.$route.meta.keepAlive
+        this.avatar = sessionStorage.avatar
     },
     methods: {
         rou(){
