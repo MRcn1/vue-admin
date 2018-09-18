@@ -1,115 +1,116 @@
 <template>
-  <div class='shopList'>
-    <el-table
-    :data="tableData"
-    style="width: 100%">
-    <el-table-column type="expand">
-      <template slot-scope="props">
-        <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="店铺名称">
-            <span>{{ props.row.name }}</span>
-          </el-form-item>
-          <el-form-item label="店铺地址">
-            <span>{{ props.row.address }}</span>
-          </el-form-item>
-          <el-form-item label="店铺介绍">
-            <span>{{ props.row.description }}</span>
-          </el-form-item>
-          <el-form-item label="店铺 ID">
-            <span>{{ props.row.id }}</span>
-          </el-form-item>
-          <el-form-item label="联系电话">
-            <span>{{ props.row.phone }}</span>
-          </el-form-item>
-          <el-form-item label="评分">
-            <span>{{ props.row.rating }}</span>
-          </el-form-item>
-          <el-form-item label="销售量">
-            <span>{{ props.row.recent_order_num }}</span>
-          </el-form-item>
-          <el-form-item label="分类">
-            <span>{{ props.row.category }}</span>
-          </el-form-item>
-        </el-form>
-      </template>
-    </el-table-column>
-    <el-table-column
-      label="店铺名称"
-      prop="name"
-      idth="300">
-    </el-table-column>
-    <el-table-column
-      label="店铺地址"
-      prop="address"
-      idth="300">
-    </el-table-column>
-    <el-table-column
-      label="店铺介绍"
-      prop="description"
-      idth="300">
-    </el-table-column>
-    <el-table-column
-      fixed="right"
-      label="操作"
-      width="300">
-      <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-        <el-button type="text" size="small">添加食品</el-button>
-        <el-button type="danger" size="mini" @click="handledelic(scope)">删除</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+    <div class='shopList'>
+        <el-table
+        :data="tableData"
+        :header-cell-style="{background:'#eef1f6'}"
+        style="width: 100%">
+            <el-table-column type="expand">
+                <template slot-scope="props">
+                    <el-form label-position="left" inline class="demo-table-expand">
+                        <el-form-item label="店铺名称">
+                            <span>{{ props.row.name }}</span>
+                        </el-form-item>
+                        <el-form-item label="店铺地址">
+                            <span>{{ props.row.address }}</span>
+                        </el-form-item>
+                        <el-form-item label="店铺介绍">
+                            <span>{{ props.row.description }}</span>
+                        </el-form-item>
+                        <el-form-item label="店铺 ID">
+                            <span>{{ props.row.id }}</span>
+                        </el-form-item>
+                        <el-form-item label="联系电话">
+                            <span>{{ props.row.phone }}</span>
+                        </el-form-item>
+                        <el-form-item label="评分">
+                            <span>{{ props.row.rating }}</span>
+                        </el-form-item>
+                        <el-form-item label="销售量">
+                            <span>{{ props.row.recent_order_num }}</span>
+                        </el-form-item>
+                        <el-form-item label="分类">
+                            <span>{{ props.row.category }}</span>
+                        </el-form-item>
+                    </el-form>
+                </template>
+            </el-table-column>
+        <el-table-column
+        label="店铺名称"
+        prop="name"
+        idth="300">
+        </el-table-column>
+        <el-table-column
+        label="店铺地址"
+        prop="address"
+        idth="300">
+        </el-table-column>
+        <el-table-column
+        label="店铺介绍"
+        prop="description"
+        idth="300">
+        </el-table-column>
+        <el-table-column
+        fixed="right"
+        label="操作"
+        width="300">
+            <template slot-scope="scope">
+                <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+                <el-button type="text" size="small">添加食品</el-button>
+                <el-button type="danger" size="mini" @click="handledelic(scope)">删除</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
 
-<el-dialog title="修改店铺信息" :visible.sync="dialogFormVisible">
-  <el-form :model="form">
-    <el-form-item label="店铺名称" :label-width="formLabelWidth">
-      <el-input v-model="form.name" autocomplete="off" ></el-input>
-    </el-form-item>
+        <el-dialog title="修改店铺信息" :visible.sync="dialogFormVisible">
+            <el-form :model="form">
+                <el-form-item label="店铺名称" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off" ></el-input>
+                </el-form-item>
 
-    <el-form-item label="详细地址" :label-width="formLabelWidth">
-      <el-input v-model="form.address" autocomplete="off"></el-input>
-      <div>当前城市：{{city}}</div>
-    </el-form-item>
+                <el-form-item label="详细地址" :label-width="formLabelWidth">
+                    <el-input v-model="form.address" autocomplete="off"></el-input>
+                    <div>当前城市：{{city}}</div>
+                </el-form-item>
 
-    <el-form-item label="店铺介绍" :label-width="formLabelWidth">
-      <el-input v-model="form.description" autocomplete="off"></el-input>
-    </el-form-item>
+                <el-form-item label="店铺介绍" :label-width="formLabelWidth">
+                    <el-input v-model="form.description" autocomplete="off"></el-input>
+                </el-form-item>
 
-    <el-form-item label="联系电话" :label-width="formLabelWidth">
-      <el-input v-model="form.phone" autocomplete="off"></el-input>
-    </el-form-item>
+                <el-form-item label="联系电话" :label-width="formLabelWidth">
+                    <el-input v-model="form.phone" autocomplete="off"></el-input>
+                </el-form-item>
 
-    <el-form-item label="店铺分类" :label-width="formLabelWidth">
-      <el-cascader
-       :options="options"
-       :placeholder="form.category">
-      </el-cascader>
-  </el-form-item>
-     <el-form-item label="店铺图片" :label-width="formLabelWidth">
-     <el-upload
-       class="avatar-uploader"
-       action="https://jsonplaceholder.typicode.com/posts/"
-       :show-file-list="false"
-       :on-success="handleAvatarSuccess"
-       :before-upload="beforeAvatarUpload">
-       <img v-if="imageUrl" :src="tableData.image_path" class="avatar">
-       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-     </el-upload>
-   </el-form-item> 
-  </el-form>
-  <div slot="footer" class="dialog-footer">
-    <el-button @click="close()">取 消</el-button>
-    <el-button type="primary" @click="close()">确 定</el-button>
- </div>
-</el-dialog>
+                <el-form-item label="店铺分类" :label-width="formLabelWidth">
+                    <el-cascader
+                    :options="options"
+                    :placeholder="form.category">
+                    </el-cascader>
+                </el-form-item>
+                <el-form-item label="店铺图片" :label-width="formLabelWidth">
+                    <el-upload
+                    class="avatar-uploader"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl" :src="tableData.image_path" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item> 
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="close()">取 消</el-button>
+                <el-button type="primary" @click="close()">确 定</el-button>
+            </div>
+        </el-dialog>
 
-  <el-pagination
-    layout="prev, pager, next"
-    :total="500"
-    :current-page.sync="page"
-    @current-change="current()">
-  </el-pagination>
-  </div>
+        <el-pagination
+        layout="prev, pager, next"
+        :total="500"
+        :current-page.sync="page"
+        @current-change="current()">
+        </el-pagination>
+    </div>
 </template>
 
 <script>
@@ -179,7 +180,7 @@ export default {
       ],
       imageUrl: "",
       form: [],
-      page:1
+      page: 1
     };
   },
   components: {},
@@ -191,14 +192,12 @@ export default {
       limit: 20
     };
     merchants(data).then(res => {
-      console.log(res);
       vm.tableData = res;
     });
   },
   methods: {
     handleClick(row) {
       var vm = this;
-      console.log(row);
       vm.form = row;
       vm.dialogFormVisible = true;
     },
@@ -217,16 +216,12 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    close(){
-      const vm = this 
-      vm.dialogFormVisible = false
+    close() {
+      const vm = this;
+      vm.dialogFormVisible = false;
     },
-    // handledelic(row){
-      
-    // },//删除事件
-    current(){
-      const vm = this
-      console.log(vm.page)
+    current() {
+      const vm = this;
       //这里可以把页数发送到后台，获取后台不同页数的内容再赋值到tableData数组中//
     }
   },
@@ -238,7 +233,6 @@ export default {
       limit: 20
     };
     merchants(data).then(res => {
-      console.log(res);
       vm.tableData = res;
     });
   }
@@ -270,16 +264,16 @@ export default {
   display: block;
 }
 
- .demo-table-expand {
-    font-size: 0;
-  }
-  .demo-table-expand label {
-    width: 90px;
-    color: #99a9bf;
-  }
-  .demo-table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
-  }
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
 </style>
