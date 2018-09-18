@@ -52,7 +52,7 @@ const router =  new Router({
                         require(['../page/shopList'], resolve)
                     },
                     meta: {
-                        title: '商户管理',
+                        title: '商家管理',
                         att:'数据管理'
                     }, 
                 },

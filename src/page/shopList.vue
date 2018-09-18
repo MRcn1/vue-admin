@@ -34,208 +34,208 @@
                     </el-form>
                 </template>
             </el-table-column>
-        <el-table-column
-        label="店铺名称"
-        prop="name"
-        idth="300">
-        </el-table-column>
-        <el-table-column
-        label="店铺地址"
-        prop="address"
-        idth="300">
-        </el-table-column>
-        <el-table-column
-        label="店铺介绍"
-        prop="description"
-        idth="300">
-        </el-table-column>
-        <el-table-column
-        fixed="right"
-        label="操作"
-        width="300">
-            <template slot-scope="scope">
-                <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-                <el-button type="text" size="small">添加食品</el-button>
-                <el-button type="danger" size="mini" @click="handledelic(scope)">删除</el-button>
-            </template>
-        </el-table-column>
-    </el-table>
+            <el-table-column
+            label="店铺名称"
+            prop="name"
+            idth="300">
+            </el-table-column>
+            <el-table-column
+            label="店铺地址"
+            prop="address"
+            idth="300">
+            </el-table-column>
+            <el-table-column
+            label="店铺介绍"
+            prop="description"
+            idth="300">
+            </el-table-column>
+            <el-table-column
+            fixed="right"
+            label="操作"
+            width="300">
+                <template slot-scope="scope">
+                    <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+                    <el-button type="text" size="small">添加食品</el-button>
+                    <el-button type="danger" size="mini" @click="handledelic(scope.row.id)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
 
-        <el-dialog title="修改店铺信息" :visible.sync="dialogFormVisible">
-            <el-form :model="form">
-                <el-form-item label="店铺名称" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off" ></el-input>
+        <el-dialog width="50%" title="修改店铺信息" :visible.sync="dialogFormVisible">
+            <el-form ref="params" :model="params" label-width="80px">
+
+                <el-form-item label="店铺名称">
+                    <el-input v-model="params.name" ></el-input>
                 </el-form-item>
 
-                <el-form-item label="详细地址" :label-width="formLabelWidth">
-                    <el-input v-model="form.address" autocomplete="off"></el-input>
-                    <div>当前城市：{{city}}</div>
+                <el-form-item label="详细地址">
+                    <el-input v-model="params.address"></el-input>
+                    <div>当前城市：{{citys.name}}</div>
                 </el-form-item>
 
-                <el-form-item label="店铺介绍" :label-width="formLabelWidth">
-                    <el-input v-model="form.description" autocomplete="off"></el-input>
+                <el-form-item label="店铺介绍">
+                    <el-input v-model="params.description"></el-input>
                 </el-form-item>
 
-                <el-form-item label="联系电话" :label-width="formLabelWidth">
-                    <el-input v-model="form.phone" autocomplete="off"></el-input>
+                <el-form-item label="联系电话">
+                    <el-input v-model="params.phone"></el-input>
                 </el-form-item>
 
-                <el-form-item label="店铺分类" :label-width="formLabelWidth">
+                <el-form-item label="店铺分类">
                     <el-cascader
-                    :options="options"
-                    :placeholder="form.category">
+                        :options="options"
+                        v-model="selectedOptions"
+                        :props='props'
+                        >
                     </el-cascader>
                 </el-form-item>
-                <el-form-item label="店铺图片" :label-width="formLabelWidth">
+
+                <el-form-item label="店铺图片">
                     <el-upload
                     class="avatar-uploader"
-                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :action="baseUrl + '/v1/addimg/shop'"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl" :src="tableData.image_path" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        <img v-if="params.image_path" :src="baseImgPath+params.image_path" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </el-form-item> 
             </el-form>
+
             <div slot="footer" class="dialog-footer">
-                <el-button @click="close()">取 消</el-button>
-                <el-button type="primary" @click="close()">确 定</el-button>
+                <el-button @click="dialogFormVisible=false">取 消</el-button>
+                <el-button type="primary" @click="save()">确 定</el-button>
             </div>
         </el-dialog>
 
-        <el-pagination
-        layout="prev, pager, next"
-        :total="500"
-        :current-page.sync="page"
-        @current-change="current()">
-        </el-pagination>
+        <div class="pagination" style="display:flex;justify-content:center;margin:30px 0;">
+            <p style="padding:5px">共 {{total}} 条</p>
+            <el-pagination
+            background
+            layout="prev, pager, next"
+            @current-change='change'
+            :page-size='20'
+            :current-page='currentPage'
+            :total="total">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
 <script>
-import { merchants } from "@/api/admin2";
+import { restaurants, cities,restaurantsCount,category,updateshop,restaurant} from "@/api/admin";
+import {baseUrl,baseImgPath} from "@/config/env"
 export default {
-  data() {
-    return {
-      tableData: [],
-      dialogFormVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      formLabelWidth: "120px",
-      city: "惠州",
-      options: [
-        {
-          value: "yiguoliaoli",
-          label: "异国料理",
-          children: [
-            {
-              value: "rihanliaoli",
-              label: "日韩料理"
+    data() {
+        return {
+            baseUrl,
+            baseImgPath,
+            currentPage: 1,
+            total: 0,
+            citys: "",
+            dialogFormVisible: false,
+            tableData: [],
+            params: {},
+            options:[],
+            props:{
+                value:'name',
+                label:'name',
+                children:'sub_categories'
             },
-            {
-              value: "xican",
-              label: "西餐"
-            },
-            {
-              value: "pisayimian",
-              label: "披萨意面"
-            },
-            {
-              value: "东南亚",
-              label: "西餐"
-            }
-          ]
-        },
-        {
-          value: "kuaicanbiandang",
-          label: "快餐便当",
-          children: [
-            {
-              value: "jiancan",
-              label: "简餐"
-            },
-            {
-              value: "gaijiaofan",
-              label: "盖浇饭"
-            },
-            {
-              value: "misimianguan",
-              label: "米丝面馆"
-            },
-            {
-              value: "baozizhoudian",
-              label: "包子粥店"
-            }
-          ]
-        }
-      ],
-      imageUrl: "",
-      form: [],
-      page: 1
-    };
-  },
-  components: {},
-  created() {
-    let vm = this;
-    let data = {
-      latitude: 23.11075,
-      longitude: 114.416786,
-      limit: 20
-    };
-    merchants(data).then(res => {
-      vm.tableData = res;
-    });
-  },
-  methods: {
-    handleClick(row) {
-      var vm = this;
-      vm.form = row;
-      vm.dialogFormVisible = true;
-    },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
+            selectedOptions:'',
+            page:1
 
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return isJPG && isLt2M;
+        };
     },
-    close() {
-      const vm = this;
-      vm.dialogFormVisible = false;
+    components: {
+
     },
-    current() {
-      const vm = this;
-      //这里可以把页数发送到后台，获取后台不同页数的内容再赋值到tableData数组中//
+    created() {
+        this.city();
+    },
+    methods: {
+        city() {
+            let data = {
+                type: "guess"
+            };
+            cities(data).then(res => {
+                this.citys = res;
+                this.getData(20,1);
+                this.restaurantsCounts()
+            });
+        },
+        getData(a,b) {
+            this.page = b
+            let data = {
+                latitude: this.citys.latitude,
+                longitude: this.citys.longitude,
+                limit: a,
+                offset: (b - 1) * 20
+            };
+            restaurants(data).then(res => {
+                this.tableData = res;
+            });
+        },
+        restaurantsCounts(){
+            restaurantsCount().then(res=>{
+                if(res.status==1){
+                    this.total = res.count
+                    this.num = res.count
+                }
+            })
+        },
+        handleClick(row) {
+            this.dialogFormVisible = true
+            this.params = {...row}
+            this.selectedOptions = row.category.split('/')
+
+            category().then(res=>{
+                this.options = res
+            })
+        },
+        handledelic(id) {
+            this.$message.error('亲，你的权限不足')
+        },
+        change(val){
+            this.getData(20,val-1)
+        },
+        handleAvatarSuccess(res,file){
+            if(res.status==1){
+                this.params.image_path = res.image_path
+            }else{
+                this.$message.error('上传图片失败！');
+            }
+        },
+        beforeAvatarUpload(file){
+            const img = (file.type=="image/png") || (file.type=="image/jpeg")
+            const size = file.size / 1024 / 1024 <2
+            if(!img){
+                this.$message.error('上传头像图片只能是 JPG和PNG 格式!');
+            }else if(!size){
+                this.$message.error('上传头像图片大小不能超过 2MB!');
+            }
+            return img&&size
+        },
+        save(){
+            let data = {
+                id:this.params.id,
+                name:this.params.name,
+                address:this.params.address,
+                description:this.params.description,
+                phone:this.params.phone,
+                image_path:this.params.image_path,
+                category:this.selectedOptions.join('/'),
+            }
+            updateshop(data).then(res=>{
+                if(res.status==1){
+                    this.$message.success(res.success)
+                    this.getData(20,this.page)
+                }
+                this.dialogFormVisible = false
+            })
+        },
     }
-  },
-  activated() {
-    let vm = this;
-    let data = {
-      latitude: 23.11075,
-      longitude: 114.416786,
-      limit: 20
-    };
-    merchants(data).then(res => {
-      vm.tableData = res;
-    });
-  }
 };
 </script>
 
