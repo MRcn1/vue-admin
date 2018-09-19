@@ -2,16 +2,18 @@
    <div class='mainContent'>
        <div class="contentBox">
             <div class="breadcrumb">
-                <el-breadcrumb separator="/">    
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>{{att}}</el-breadcrumb-item>
-                    <el-breadcrumb-item>{{title}}</el-breadcrumb-item>
-                    <el-popover
+                <el-breadcrumb separator='/'>    
+                    <el-breadcrumb-item v-if="title=='首页'">首页</el-breadcrumb-item>
+                    <el-breadcrumb-item v-else :to="{ path: '/home' }">首页</el-breadcrumb-item>
+                    <el-breadcrumb-item v-if="title!='首页'">{{att}}</el-breadcrumb-item>
+                    <el-breadcrumb-item v-if="title!='首页'">{{title}}</el-breadcrumb-item>
+                </el-breadcrumb>
+                <el-popover
                     placement="top"
                     trigger="hover">
                     <div style="text-align: center" class="popo">
                         <ul>
-                            <li>首页</li>
+                            <li @click="gohome">首页</li>
                             <li @click="dropout">退出</li>
                         </ul>
                     </div>
@@ -19,12 +21,11 @@
                         <img :src="avatar" alt="" width="100%">
                     </div>
                     </el-popover>
-                </el-breadcrumb>
             </div>
 
             <div class="content">
                 <transition name="fade" mode="out-in">
-                    <keep-alive v-if="keepAlive">
+                    <keep-alive v-if="$route.meta.keepAlive">
                         <router-view></router-view>
                     </keep-alive>
                     <router-view v-else></router-view>
@@ -51,13 +52,14 @@ export default {
     },
     created(){
         this.rou()
-        this.keepAlive = this.$route.meta.keepAlive
         this.avatar = sessionStorage.avatar
     },
     methods: {
         rou(){
-            this.att = this.$route.matched[1].meta.att
-            this.title = this.$route.matched[1].meta.title
+            if(this.$route.matched[1]){
+                this.att = this.$route.matched[1].meta.att
+                this.title = this.$route.matched[1].meta.title
+            }
         },
         dropout(){
             singout().then(res=>{
@@ -66,11 +68,19 @@ export default {
                     this.$router.push({path:'/'})
                 }
             })
+        },
+        gohome(){
+            this.$router.push({path:'/home'})
         }
     },
     watch:{
         $route(){
             this.rou()
+            // if(this.$route.meta.keepAlive){
+            //     this.keepAlive = this.$route.meta.keepAlive
+            // }else{
+            //     this.keepAlive = false
+            // }
         }
     }
  }
@@ -92,7 +102,11 @@ export default {
         line-height: 60px;
         padding-left: 20px;
         position: relative;
-        .red{
+        .content{
+            padding: 30px;
+        }
+    }
+    .red{
             width: 40px;
             height: 40px;
             float: right;
@@ -105,10 +119,6 @@ export default {
                 vertical-align:top
             }
         }
-        .content{
-            padding: 30px;
-        }
-    }
     .content{
         padding: 20px;
     }
@@ -134,4 +144,3 @@ export default {
     padding: 0;
 }
 </style>
-

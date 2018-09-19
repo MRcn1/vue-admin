@@ -198,7 +198,7 @@ export default {
             this.$message.error('亲，你的权限不足')
         },
         change(val){
-            this.getData(20,val-1)
+            this.getData(20,val)
         },
         handleAvatarSuccess(res,file){
             if(res.status==1){

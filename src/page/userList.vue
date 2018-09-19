@@ -48,7 +48,7 @@ export default {
     data () {
         return {
             tableData:[],
-            total:'',
+            total:0,
             currentPage:1,
             num:''
         }

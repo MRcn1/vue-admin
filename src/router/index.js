@@ -31,7 +31,17 @@ const router =  new Router({
             children:[
                 {
                     path:'',
-                    redirect:'/userList'
+                    redirect:'/home'
+                },
+                {
+                    path: '/home',
+                    name: 'home',
+                    component(resolve) {
+                        require(['../page/home'], resolve)
+                    },
+                    meta: {
+                        title: '首页',
+                    }, 
                 },
                 {
                     path: '/userList',
@@ -52,8 +62,9 @@ const router =  new Router({
                         require(['../page/shopList'], resolve)
                     },
                     meta: {
-                        title: '商家管理',
-                        att:'数据管理'
+                        title: '商家列表',
+                        att:'数据管理',
+                        keepAlive:true,
                     }, 
                 },
                 {
