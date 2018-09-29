@@ -76,13 +76,8 @@ export default {
     watch:{
         $route(){
             this.rou()
-            // if(this.$route.meta.keepAlive){
-            //     this.keepAlive = this.$route.meta.keepAlive
-            // }else{
-            //     this.keepAlive = false
-            // }
         }
-    }
+    },
  }
 </script>
 

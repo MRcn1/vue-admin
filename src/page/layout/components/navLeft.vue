@@ -69,7 +69,7 @@
            this.$router.push({path:path})
        },
         active(){
-            this.$router.push({path:'/home'})
+            this.$router.push({path:'home'})
         }
    },
  }

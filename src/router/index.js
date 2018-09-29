@@ -26,25 +26,27 @@ const router =  new Router({
                 require(['../page/layout/layout'], resolve)
             },
             meta: {
-                title: '主页'
+                title: '主页',
+                keepAlive:true,
             },
             children:[
                 {
                     path:'',
-                    redirect:'/home'
+                    redirect:'home'
                 },
                 {
-                    path: '/home',
+                    path: 'home',
                     name: 'home',
                     component(resolve) {
                         require(['../page/home'], resolve)
                     },
                     meta: {
                         title: '首页',
+                        keepAlive:true,
                     }, 
                 },
                 {
-                    path: '/userList',
+                    path: 'userList',
                     name: 'userList',
                     component(resolve) {
                         require(['../page/userList'], resolve)
@@ -56,7 +58,7 @@ const router =  new Router({
                     }, 
                 },
                 {
-                    path: '/shopList',
+                    path: 'shopList',
                     name: 'shopList',
                     component(resolve) {
                         require(['../page/shopList'], resolve)
@@ -68,7 +70,7 @@ const router =  new Router({
                     }, 
                 },
                 {
-                    path: '/foodList',
+                    path: 'foodList',
                     name: 'foodList',
                     component(resolve) {
                         require(['../page/foodList'], resolve)
@@ -79,7 +81,7 @@ const router =  new Router({
                     }, 
                 },
                 {
-                    path: '/orderList',
+                    path: 'orderList',
                     name: 'orderList',
                     component(resolve) {
                         require(['../page/orderList'], resolve)
@@ -90,7 +92,7 @@ const router =  new Router({
                     }, 
                 },
                 {
-                    path: '/adminList',
+                    path: 'adminList',
                     name: 'adminList',
                     component(resolve) {
                         require(['../page/adminList'], resolve)
@@ -101,7 +103,7 @@ const router =  new Router({
                     }, 
                 },
                 {
-                    path: '/addshow',
+                    path: 'addshow',
                     name: 'addshow',
                     component(resolve) {
                         require(['../page/addshow'], resolve)
@@ -110,7 +112,7 @@ const router =  new Router({
                         title: '添加商品',
                         att:'添加数据'
                     }, 
-                }
+                },
             ]
         },
     ]
