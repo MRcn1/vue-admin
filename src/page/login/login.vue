@@ -1,24 +1,24 @@
 <template>
     <div class="login">
-                <div class="name">elm后台管理系统</div>
-                <div class="box">
-                    <el-form :model="loginform" :rules="rules"  ref="loginForm">
-                        <el-form-item prop="username">
-                            <el-input v-model="loginform.username" placeholder="用户名"></el-input>
-                        </el-form-item>
-                        <el-form-item prop="password">
-                            <el-input type="password" v-model="loginform.password" placeholder="密码"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type='primary' @click="login" :loading="loading">登录</el-button>
-                        </el-form-item>
-                        <el-form-item>
-                            <p class="tip">温馨提示：</p>
-                            <p class="tip">未登录过的新用户，自动注册</p>
-                            <p class="tip">注册过的用户可凭账号密码登录</p>
-                        </el-form-item>
-                    </el-form>
-                </div>
+      <div class="name">elm后台管理系统</div>
+      <div class="box">
+          <el-form :model="loginform" :rules="rules"  ref="loginForm">
+              <el-form-item prop="username">
+                  <el-input v-model="loginform.username" placeholder="用户名" @keyup.enter.native="login"></el-input>
+              </el-form-item>
+              <el-form-item prop="password">
+                  <el-input type="password" v-model="loginform.password" placeholder="密码" @keyup.enter.native="login"></el-input>
+              </el-form-item>
+              <el-form-item>
+                  <el-button type='primary' @click="login" :loading="loading">登录</el-button>
+              </el-form-item>
+              <el-form-item>
+                  <p class="tip">温馨提示：</p>
+                  <p class="tip">未登录过的新用户，自动注册</p>
+                    <p class="tip">注册过的用户可凭账号密码登录</p>
+              </el-form-item>
+          </el-form>
+      </div>
     </div>
 </template>
 
@@ -72,14 +72,14 @@ export default {
           this.loading = false;
         }
       });
-    },
-  },
-    // beforeRouteLeave (to, from, next) {
-    //     if(from.name == 'login' && to.name=='home'){
-    //         this.$router.go(0)
-    //     }
-    //     next()
-    // }
+    }
+  }
+  // beforeRouteLeave (to, from, next) {
+  //     if(from.name == 'login' && to.name=='home'){
+  //         this.$router.go(0)
+  //     }
+  //     next()
+  // }
 };
 </script>
 
@@ -101,7 +101,7 @@ export default {
     text-align: center;
   }
   .box {
-    .wh(368px,282px);
+    .wh(368px, 282px);
     background-color: #fff;
     border-radius: 5px;
     display: flex;
